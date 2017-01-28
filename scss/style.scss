@@ -1,0 +1,235 @@
+@import "bootstrap/bootstrap";
+
+html {
+    font-size: 14px;
+}
+
+@include media-breakpoint-up(sm) {
+    html {
+        font-size: 16px;
+    }
+}
+@include media-breakpoint-only(md) {
+    #mainNavigation {
+        .nav-link {
+            font-size: small;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+
+}
+
+.site-header,
+.site-footer {
+    margin-left: -$grid-gutter-width-base / 2;
+    margin-right: -$grid-gutter-width-base / 2;
+}
+
+header.site-header {
+    background: $header-background;
+
+    .navbar {
+        display: block;
+        padding: 0;
+
+    }
+    nav[class*="navbar-toggleable-"] {
+        & > .container {
+            display: block;
+        }
+    }
+
+    .logo-col {
+        padding-top: $grid-gutter-width-base / 2;
+    }
+
+    .account-col {
+        padding: 6px 0 8px;
+        
+        a {
+            color: $gray-dark;
+        }
+
+        .navbar-toggler {
+            font-size: inherit;
+            padding: inherit;
+        }
+    }
+
+    .search-col {
+
+         .form-inline {
+            .input-group {
+                width: 100%;
+                border: 1px solid $gray;
+
+                .form-control {
+                    border: none;
+                }
+
+                .input-group-btn {
+                    button {
+                        border-left: 1px solid $gray;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .navbar-collapse {
+        background: $brand-info-dark;
+    }
+
+    .navbar-nav {
+
+        border-radius: 0px;
+        padding: 0;
+        justify-content: center;
+
+        .nav-item {
+
+            & + .nav-item {
+                margin-left: 0;
+            }
+
+            a {
+                color: $gray-lighter;
+                font-family: $font-family-fancy;
+                font-size: large;
+                padding: 0.75rem 1.5rem;
+
+                &:active,
+                &:focus,
+                &:hover {
+                    text-decoration: none;
+                    color: white;
+                    background: $brand-info;
+                }
+            }
+        }
+    }
+}
+
+.main-container {
+    background: white;
+    border-right: 1px solid $gray-dark;
+    border-left: 1px solid $gray-dark;
+    padding: 50px;
+}
+
+footer {
+    background: $gray-light;
+
+    a {
+        color: white;
+        font-size: small;
+
+        &:active,
+        &:focus,
+        &:hover {
+            text-decoration: none;
+            color: $brand-success;
+        }
+    }
+}
+
+/* TYPE */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $font-family-fancy;
+}
+
+h1 {
+    font-size: $font-size-h3;
+}
+h2 {
+    font-size: $font-size-h4;
+}
+h3 {
+    font-size: $font-size-h5;
+}
+
+a {
+    color: $brand-info;
+    text-decoration: none;
+
+    &:active,
+    &:focus,
+    &:hover {
+        text-decoration: none;
+        color: lighten($brand-info, 20%);
+    }
+}
+
+/* FORMS */
+
+legend {
+    font-family: $font-family-fancy;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.required {
+    &::before {
+        content: '* ';
+        color: $brand-danger;
+    }
+}
+
+input[type=number] {
+    padding: 0;
+}
+
+.input-group {
+    & > .input-group-addon {
+        border-radius: 0;
+    }
+}
+
+/* TABLES */
+
+.table {
+    th, td {
+        vertical-align: middle;
+        padding: 0.5rem;
+    }
+
+    &.table-sm {
+        th, td {
+            padding: 0.3rem;
+        }
+    }
+}
+
+.product-details {
+    .table {
+        td {
+            font-family: $font-family-utility;
+        }
+    }
+}
+
+/* BUTTONS */
+
+.btn,
+.btn-sm {
+    border-radius: 0;
+}
+
+.btn,
+button {
+    cursor: pointer;
+}
+
+/* LISTS */
+
+ul {
+    list-style: none;
+}
