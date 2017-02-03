@@ -7,6 +7,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var Good = <div className="things">real good</div>;
+import App from './components/app';
 
-ReactDOM.render(<Good />, document.getElementById("placeholder"));
+ReactDOM.render(<App />, document.getElementById("placeholder"));
