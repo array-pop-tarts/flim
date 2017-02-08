@@ -17,15 +17,18 @@ class FilmLists extends React.Component {
             tabs: [
                 {
                     name: "My Films",
-                    status: "active"
+                    status: "active",
+                    paneId: "filmsPane"
                 },
                 {
                     name: "My Screenings",
-                    status: ""
+                    status: "",
+                    paneId: "screeningsPane"
                 },
                 {
                     name: "My Media",
-                    status: ""
+                    status: "",
+                    paneId: "mediaPane"
                 }
             ]
         }
@@ -34,17 +37,31 @@ class FilmLists extends React.Component {
     render() {
         return (
             <section className="list-tabs">
-                <div className="list-tabs">
-                    <ul className="nav nav-tabs nav-fill">
+                <div className="list-tabs card">
+                    <div className="card-header">
+                        <ul className="nav nav-tabs card-header-tabs" role="tablist">
+                            {
+                                this.state.tabs.map((tab, i) =>  (
+                                    <FilmListTab
+                                        name={ tab.name }
+                                        status={ tab.status }
+                                        paneId={ tab.paneId }
+                                    />
+                                ))
+                            }
+                        </ul>
+                    </div>
+
+                    <div className="card-block tab-content">
                         {
                             this.state.tabs.map((tab, i) =>  (
-                                <FilmListTab
-                                    name={ tab.name }
-                                    status={ tab.status }
-                                />
+                                <div className="tab-pane active" id={ tab.paneId } role="tabpanel">
+                                    { tab.name }
+                                </div>
                             ))
                         }
-                    </ul>
+                    </div>
+
                 </div>
 
                 <FilmListPagination/>

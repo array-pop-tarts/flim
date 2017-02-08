@@ -11,7 +11,9 @@ class FilmListTab extends React.Component {
     render() {
         return (
             <li className="nav-item">
-                <a href="#" className={ "nav-link" + " " + this.props.status }>{ this.props.name }</a>
+                <a href={ "#" + this.props.paneId } className={ "nav-link" + " " + this.props.status } data-toggle="tab" role="tab">
+                    { this.props.name }
+                </a>
             </li>
         );
     }
