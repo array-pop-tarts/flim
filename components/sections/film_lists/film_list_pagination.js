@@ -16,7 +16,7 @@ class FilmListPagination extends React.Component {
                         <a href="#">Previous</a>
                     </li>
                     <li className="list-inline-item">
-                        Showing 11-20 of 1,846
+                        Showing 11-20 of { this.props.filmCount }
                     </li>
                     <li className="list-inline-item">
                         <a href="#">Next</a>
