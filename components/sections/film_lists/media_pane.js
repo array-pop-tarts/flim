@@ -5,14 +5,14 @@
  */
 import React from 'react';
 
-import FilmListPagination from './film_list_pagination'
-import FilmListFilters from './film_list_filters'
+import Pagination from './pagination'
+import Filters from './filters'
 
-import Table from './film_list_table';
-import Header from './film_list_table/header';
-import Row from './film_list_table/row';
+import Table from './table';
+import Header from './table/header';
+import Row from './table/row';
 
-class MediaListPane extends React.Component {
+class MediaPane extends React.Component {
     constructor() {
         super();
 
@@ -24,8 +24,8 @@ class MediaListPane extends React.Component {
     render() {
         return (
             <div className={ "tab-pane" + this.props.paneState} id={ this.props.tab.paneId } role="tabpanel">
-                <FilmListPagination filmCount={ this.state.filmCount } />
-                <FilmListFilters/>
+                <Pagination filmCount={ this.state.filmCount } />
+                <Filters/>
 
                 <Table>
                     <Header headers={ ["Title", "Date", "Media"] } />
@@ -39,4 +39,4 @@ class MediaListPane extends React.Component {
     }
 }
 
-export default MediaListPane;
+export default MediaPane;

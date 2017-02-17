@@ -6,7 +6,7 @@
 import React from 'react';
 import Link from 'react-router';
 
-class FilmListPagination extends React.Component {
+class Pagination extends React.Component {
 
     render() {
         return (
@@ -28,4 +28,4 @@ class FilmListPagination extends React.Component {
 
 }
 
-export default FilmListPagination;
+export default Pagination;

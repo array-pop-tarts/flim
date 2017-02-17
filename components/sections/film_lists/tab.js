@@ -6,7 +6,7 @@
 import React from 'react';
 import Link from 'react-router';
 
-class FilmListTab extends React.Component {
+class Tab extends React.Component {
 
     render() {
         return (
@@ -20,4 +20,4 @@ class FilmListTab extends React.Component {
 
 }
 
-export default FilmListTab;
+export default Tab;

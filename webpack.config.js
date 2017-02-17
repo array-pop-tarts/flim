@@ -30,10 +30,19 @@ module.exports = {
                     "css-loader",
                     "sass-loader"
                 ]
+            },
+            {
+                test: /.html$/,
+                loader: "file-loader?name=[name].[ext]"
             }
         ]
     },
     devServer: {
         historyApiFallback: true
+    },
+    resolve: {
+        root: [
+            require('path').resolve('.')
+        ]
     }
 };

@@ -7,7 +7,6 @@ import React from 'react';
 
 import Header from './layout/header';
 import FilmLists from './sections/film_lists';
-import FilmForm from './sections/film_form';
 
 class App extends React.Component {
 
@@ -19,7 +18,6 @@ class App extends React.Component {
         return (
             <div className="container-fluid">
                 <Header/>
-                <FilmForm/>
                 <FilmLists/>
             </div>
         );

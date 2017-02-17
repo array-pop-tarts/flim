@@ -5,10 +5,10 @@
  */
 import React from 'react';
 
-class FilmForm extends React.Component {
+class Form extends React.Component {
     render() {
         return (
-            <section id="filmAdd">
+            <section id={ this.props.id } className="collapse">
                 <form id="newScreening" action="" method="post">
                     <div className="row">
                         <div className="col-sm-24 col-md-12">
@@ -81,4 +81,4 @@ class FilmForm extends React.Component {
     }
 }
 
-export default FilmForm;
+export default Form;

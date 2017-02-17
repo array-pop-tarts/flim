@@ -7,7 +7,7 @@
 import React from 'react';
 import Link from 'react-router';
 
-class FilmListFilters extends React.Component {
+class Filters extends React.Component {
 
     render() {
         return (
@@ -36,4 +36,4 @@ class FilmListFilters extends React.Component {
 
 }
 
-export default FilmListFilters;
+export default Filters;

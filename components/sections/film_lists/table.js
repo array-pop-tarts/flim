@@ -6,7 +6,7 @@
 
 import React from 'react';
 
-class FilmListTable extends React.Component {
+class Table extends React.Component {
 
     render() {
         return (
@@ -18,4 +18,4 @@ class FilmListTable extends React.Component {
 
 }
 
-export default FilmListTable;
+export default Table;
