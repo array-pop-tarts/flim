@@ -23,9 +23,7 @@ class Films extends React.Component {
             <div className="row">
                 {this.state.films.map((film) => {
                     return (
-                        <div className="col-24 col-sm-12 col-xl-6">
-                            <Film film={ film } key={ film.id } />
-                        </div>
+                        <Film film={ film } key={ film.id } />
                     );
                 })}
             </div>
