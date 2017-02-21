@@ -6,7 +6,7 @@
 import React from 'react';
 
 import Header from './layout/header';
-import FilmLists from './sections/film_lists';
+import Films from './sections/films';
 
 class App extends React.Component {
 
@@ -17,8 +17,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="container-fluid">
-                <Header/>
-                <FilmLists/>
+                <Films/>
             </div>
         );
     }

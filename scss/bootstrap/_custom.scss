@@ -100,12 +100,12 @@ $white:  #fff !default;
 $black:  #000 !default;
 $red:    #d9534f !default;
 $orange: #f0ad4e !default;
-$yellow: #ffd500 !default;
-$green:  #5cb85c !default;
+$yellow: #FFFF8F !default;
+$green:  #9DDA22 !default;
 $blue:   #0275d8 !default;
 $teal:   #5bc0de !default;
-$pink:   #ff5b77 !default;
-$purple: #613d7c !default;
+$pink:   #CE3D8F !default;
+$purple: #70209C !default;
 
 // Create grayscale
 $gray-dark:                 #222222 !default;
@@ -115,11 +115,11 @@ $gray-lighter:              #eceeef !default;
 $gray-lightest:             #f7f7f9 !default;
 
 // Reassign color vars to semantic color scheme
-$brand-primary:             #950e00 !default;
+$brand-primary:             $purple !default;
 $brand-success:             $green !default;
 $brand-info:                #235285 !default;
 $brand-warning:             #ffa800 !default;
-$brand-danger:              #d9534f !default;
+$brand-danger:              $pink !default;
 $brand-inverse:             $gray-dark !default;
 
 $brand-info-dark:           #2a4058;
@@ -238,7 +238,7 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 $grid-columns:               24 !default;
-$grid-gutter-width-base:     30px !default;
+$grid-gutter-width-base:     20px !default;
 $grid-gutter-widths: (
     xs: $grid-gutter-width-base,
     sm: $grid-gutter-width-base,

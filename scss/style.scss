@@ -23,12 +23,6 @@ html {
 
 }
 
-.site-header,
-.site-footer {
-    margin-left: -$grid-gutter-width-base / 2;
-    margin-right: -$grid-gutter-width-base / 2;
-}
-
 header.site-header {
     background: $header-background;
 
@@ -87,7 +81,7 @@ header.site-header {
 
     .navbar-nav {
 
-        border-radius: 0px;
+        border-radius: 0;
         padding: 0;
         justify-content: center;
 
@@ -153,6 +147,9 @@ h2 {
 h3 {
     font-size: $font-size-h5;
 }
+h4 {
+    font-size: $font-size-h6;
+}
 
 a {
     color: $brand-info;
@@ -172,10 +169,6 @@ legend {
     font-family: $font-family-fancy;
 }
 
-.form-control {
-    border-radius: 0;
-}
-
 .required {
     &::before {
         content: '* ';
@@ -187,41 +180,7 @@ input[type=number] {
     padding: 0;
 }
 
-.input-group {
-    & > .input-group-addon {
-        border-radius: 0;
-    }
-}
-
-/* TABLES */
-
-.table {
-    th, td {
-        vertical-align: middle;
-        padding: 0.5rem;
-    }
-
-    &.table-sm {
-        th, td {
-            padding: 0.3rem;
-        }
-    }
-}
-
-.product-details {
-    .table {
-        td {
-            font-family: $font-family-utility;
-        }
-    }
-}
-
 /* BUTTONS */
-
-.btn,
-.btn-sm {
-    border-radius: 0;
-}
 
 .btn,
 button {
@@ -232,4 +191,33 @@ button {
 
 ul {
     list-style: none;
+}
+
+.list-group-item {
+    padding: 0.25rem 0.75rem;
+}
+
+/* CARDS */
+
+.card.film-card {
+    margin-bottom: 1rem;
+}
+
+/* FILM CARDS */
+
+
+a.rating-icon {
+    color: $orange;
+    padding-right: 0.5rem;
+}
+
+.available-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.screening-friends {
+  font-size: smaller;
+  padding-left: 1rem;
 }

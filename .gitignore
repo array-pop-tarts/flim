@@ -4,3 +4,4 @@ dist/**/*
 prepros.cfg
 css/**/*
 ryans-architecture.txt
+db/*

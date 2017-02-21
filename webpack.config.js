@@ -13,7 +13,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /.jsx?$/,
+                test: /\.jsx?$/,
                 loader: "babel-loader",
                 exclude: /node_modules/,
                 query: {
@@ -24,6 +24,11 @@ module.exports = {
                 }
             },
             {
+                test: /\.css$/,
+                loader: "style-loader!css-loader",
+                include: /node_modules/
+            },
+            {
                 test: /\.scss$/,
                 loaders: [
                     "style-loader",
@@ -32,7 +37,7 @@ module.exports = {
                 ]
             },
             {
-                test: /.html$/,
+                test: /\.html$/,
                 loader: "file-loader?name=[name].[ext]"
             }
         ]
