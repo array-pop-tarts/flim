@@ -206,9 +206,20 @@ ul {
 /* FILM CARDS */
 
 
-a.rating-icon {
-    color: $orange;
-    padding-right: 0.5rem;
+.rating {
+    .btn {
+        color: $orange;
+        padding: 0.1rem 0.25rem;
+        line-height: normal;
+        background-color: transparent;
+        border: none;
+    }
+}
+
+.unrated {
+    .btn {
+        color: $gray-light;
+    }
 }
 
 .available-media {

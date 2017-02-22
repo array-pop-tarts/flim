@@ -17,9 +17,14 @@ class Film extends React.Component {
     constructor() {
         super();
 
+        this.state = {
+            rating: null
+        };
+
         this.ratings = this.ratings.bind(this);
         this.media = this.media.bind(this);
 
+        this.highlightRating = this.highlightRating.bind(this);
         this.changeRating = this.changeRating.bind(this);
     }
 
@@ -36,8 +41,8 @@ class Film extends React.Component {
                     <div className="card-header">
                         <h3>{ film.title }</h3>
                         <h4>{ film.translation }</h4>
-                        <div className={ "h6 " + ratedClass }>
-                            { this.ratings() }
+                        <div className={ "rating h6 " + ratedClass }>
+                            { this.ratings(film.rating) }
                         </div>
                     </div>
 
@@ -68,11 +73,12 @@ class Film extends React.Component {
 
                         <div className="film-media">
                             { this.media() }
+                            <MediaForm/>
                         </div>
 
                         <div className="film-screenings">
                             {
-                                film.screenings !== undefined &&
+                                film.screenings !== undefined && film.screenings &&
                                     <Screenings screenings={ film.screenings } />
                             }
                         </div>
@@ -83,24 +89,24 @@ class Film extends React.Component {
         );
     }
 
-    ratings() {
-        let rating = 0;
-        if (this.props.film.rating !== undefined)
-            rating = this.props.film.rating;
+    ratings(rating) {
+
+        if (rating === undefined)
+            rating = 0;
 
         let ratingLinks = [];
+        let selected = false;
 
-        for (let i = 1; i <= rating; i++) {
+        for (let i = 1; i <= 10; i++) {
+            selected = i <= rating;
+
             ratingLinks.push(
-                <Rating selected={true} key={i} index={i} changeRating={ (newRating) => this.changeRating(newRating) } />
+                <Rating selected={selected}
+                        key={i}
+                        index={i}
+                        highlightRating={ (rating) => this.highlightRating(rating) }
+                        changeRating={ (rating) => this.changeRating(rating) } />
             );
-        }
-        if (rating < 10) {
-            for (let j = rating + 1; j <= 10; j++) {
-                ratingLinks.push(
-                    <Rating selected={false} key={j} index={j}  changeRating={ (newRating) => this.changeRating(newRating) } />
-                );
-            }
         }
         return ratingLinks;
     }
@@ -115,6 +121,11 @@ class Film extends React.Component {
                     <AddMediaButton expanded={true} />
                 </div>
             );
+    }
+
+    highlightRating(rating) {
+        this.setState({rating: rating});
+        this.ratings(rating);
     }
 
     changeRating(rating) {

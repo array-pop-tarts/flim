@@ -13,7 +13,7 @@ class Screenings extends React.Component {
             <ul className="list-group">
                 {
                     Object.keys(this.props.screenings).map((screening) => {
-                        return <Screening screening={ screening } key={ screening } />
+                        return <Screening screening={ screening } key={ screening }/>
                     })
                 }
             </ul>
