@@ -4,6 +4,10 @@ html {
     font-size: 14px;
 }
 
+body {
+    background: $gray-dark;
+}
+
 @include media-breakpoint-up(sm) {
     html {
         font-size: 16px;

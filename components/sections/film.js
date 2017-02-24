@@ -31,7 +31,6 @@ class Film extends React.Component {
     render() {
 
         let film = this.props.film;
-
         let ratedClass = (film.rating) ? "" : "unrated";
 
         return (
@@ -77,10 +76,7 @@ class Film extends React.Component {
                         </div>
 
                         <div className="film-screenings">
-                            {
-                                film.screenings !== undefined && film.screenings &&
-                                    <Screenings screenings={ film.screenings } />
-                            }
+                             <Screenings screenings={ this.props.screenings } />
                         </div>
 
                     </div>
@@ -112,8 +108,8 @@ class Film extends React.Component {
     }
 
     media() {
-        if (this.props.film.media !== undefined) {
-            return <AvailableMedia media={ this.props.film.media }/>;
+        if (this.props.media) {
+            return <AvailableMedia media={ this.props.media }/>;
         }
         else
             return (

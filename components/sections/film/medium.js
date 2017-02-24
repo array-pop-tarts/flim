@@ -9,7 +9,7 @@ class Medium extends React.Component {
     render() {
         return (
             <a className="btn btn-sm btn-secondary">
-                BluRay
+                { this.props.medium.type }
             </a>
         );
     }
