@@ -17,7 +17,7 @@ class AvailableMedia extends React.Component
             <div className="available-media">
                 <h6>Media</h6>
                 {
-                    this.props.media.map((medium) => {
+                    this.props.mediaInfo.map((medium) => {
                         return <Medium medium={ medium } key={ medium.key } />
                     })
                 }

@@ -7,6 +7,9 @@ import React from 'react';
 import firebase from 'firebase';
 
 import Rating from './film/rating';
+import ReleasedYear from './film/released_year';
+import ScreenedYear from './film/screened_year';
+
 import AvailableMedia from './film/available_media';
 import AddMediaButton from './film/add-media-button';
 import MediaForm from './film/media-form';
@@ -48,26 +51,8 @@ class Film extends React.Component {
                     <div className="card-block">
 
                         <div className="row text-center film-years">
-                            <div className="col">
-                                <div className="row">
-                                    <div className="col"><h6>Released</h6></div>
-                                    <div className="col">
-                                        <a className="btn btn-sm btn-secondary">
-                                            { film.released }
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="row">
-                                    <div className="col"><h6>Screened</h6></div>
-                                    <div className="col">
-                                        <a className="btn btn-sm btn-secondary">
-                                            { film.screened }
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            <ReleasedYear year={ film.released } />
+                            <ScreenedYear year={ film.screened } />
                         </div>
 
                         <div className="film-media">
@@ -76,7 +61,7 @@ class Film extends React.Component {
                         </div>
 
                         <div className="film-screenings">
-                             <Screenings screenings={ this.props.screenings } />
+                             <Screenings screeningsInfo={ this.props.screeningsInfo } />
                         </div>
 
                     </div>
@@ -108,8 +93,8 @@ class Film extends React.Component {
     }
 
     media() {
-        if (this.props.media) {
-            return <AvailableMedia media={ this.props.media }/>;
+        if (this.props.mediaInfo.length) {
+            return <AvailableMedia mediaInfo={ this.props.mediaInfo }/>;
         }
         else
             return (

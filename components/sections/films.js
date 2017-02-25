@@ -45,8 +45,8 @@ class Films extends React.Component {
                         return (
                             <Film film={ film }
                                   key={ film.id }
-                                  screenings={ this.getScreenings(film) }
-                                  media={ this.getMedia(film) }
+                                  screeningsInfo={ this.getScreenings(film) }
+                                  mediaInfo={ this.getMedia(film) }
                             />
                         );
                     })}
