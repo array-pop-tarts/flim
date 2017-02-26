@@ -41,10 +41,10 @@ class Films extends React.Component {
         ) {
             return (
                 <div className="row">
-                    {this.state.films.map((film) => {
+                    {this.state.films.map((film, i) => {
                         return (
                             <Film film={ film }
-                                  key={ film.id }
+                                  key={ i }
                                   screeningsInfo={ this.getScreenings(film) }
                                   mediaInfo={ this.getMedia(film) }
                             />
@@ -105,17 +105,26 @@ class Films extends React.Component {
 
         fireFilms.on('child_changed', (snapshot) => {
             const films = this.state.films.map(film => {
-                if (film.id !== snapshot.key)
+                if (film.id !== snapshot.key) {
                     return film;
-                else
-                    return snapshot.val();
+                }
+                else {
+                    let newFilm = snapshot.val();
+                    newFilm.id = snapshot.key;
+                    return newFilm;
+                }
             });
 
             this.setState({films: films});
         });
 
         let fireScreenings = firebase.database().ref('screenings');
-        fireScreenings.on('value', snapshot => this.setState({ screenings: snapshot.val(), loaded_screenings: true }));
+        fireScreenings.on('value', snapshot => {
+            this.setState({
+                screenings: snapshot.val(),
+                loaded_screenings: true
+            })
+        });
 
         let fireVenues = firebase.database().ref('venues');
         fireVenues.on('value', snapshot => {
@@ -134,12 +143,27 @@ class Films extends React.Component {
         });
 
         let fireMedia = firebase.database().ref('media');
+
         fireMedia.on('value', snapshot => {
             this.setState({
                 media: snapshot.val(),
                 loaded_media: true
             });
         });
+
+        /*
+        fireMedia.on('child_added', snapshot => {
+            const medium = snapshot.val();
+            const media = this.state.media;
+            media[snapshot.key] = medium[snapshot.key];
+            console.log(snapshot.key);
+
+            this.setState({
+                media: media,
+                loaded_media: true
+            });
+        });
+*/
     }
 }
 

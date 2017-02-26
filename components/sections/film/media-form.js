@@ -5,6 +5,7 @@
  */
  
 import React from 'react';
+import firebase from 'firebase';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
@@ -21,6 +22,7 @@ class MediaForm extends React.Component {
 
         this.onDateChange = this.onDateChange.bind(this);
         this.onTypeChange = this.onTypeChange.bind(this);
+        this.onSaveMedia = this.onSaveMedia.bind(this);
     }
 
     render() {
@@ -45,7 +47,7 @@ class MediaForm extends React.Component {
                             <option value="BluRay">BluRay</option>
                         </select>
                     </div>
-                    <button className="btn btn-sm btn-success">
+                    <button className="btn btn-sm btn-success" onClick={ (e) => this.onSaveMedia(e) } >
                         <i className="fa fa-check"></i>
                     </button>
                 </div>
@@ -61,8 +63,21 @@ class MediaForm extends React.Component {
         this.setState({ type: e.target.value });
     }
 
-    onSaveMedia() {
+    onSaveMedia(e) {
+        e.preventDefault();
+        const fireMedia = firebase.database().ref('media');
+        let selectedDate = (this.state.date);
+        let acquired = selectedDate._d.getTime();
+        const medium = {
+            acquired: acquired,
+            type: this.state.type
+        };
+        let newFireMedium = fireMedia.push(medium);
 
+        let newMedium = {};
+        newMedium['/films/' + this.props.filmId + '/media/' + newFireMedium.key] = true;
+
+        firebase.database().ref().update(newMedium);
     }
 }
 

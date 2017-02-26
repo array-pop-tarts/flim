@@ -57,7 +57,7 @@ class Film extends React.Component {
 
                         <div className="film-media">
                             { this.media() }
-                            <MediaForm/>
+                            <MediaForm filmId={ this.props.film.id } />
                         </div>
 
                         <div className="film-screenings">
