@@ -4,7 +4,7 @@
  * Created: 2017-02-20
  */
 import React from 'react';
-import firebase from 'firebase';
+import moment from 'moment';
 
 import Venue from './venue';
 import User from './user';
@@ -13,13 +13,16 @@ class Screening extends React.Component {
 
     constructor() {
         super();
+
+        this.displayDate = this.displayDate.bind(this);
     }
 
     render() {
+        this.displayDate();
         return (
             <li className="list-group-item  justify-content-between">
                 <div>
-                    { this.props.screening.date } @ <Venue venue={this.props.screening.venueInfo } />
+                    { this.displayDate() } @ <Venue venue={this.props.screening.venueInfo } />
                 </div>
                 <button className="btn btn-sm btn-outline-secondary">
                     <i className="fa fa-cog"></i>
@@ -29,6 +32,10 @@ class Screening extends React.Component {
                 </div>
             </li>
         );
+    }
+
+    displayDate() {
+        return moment(this.props.screening.date).format('YYYY-MM-DD');
     }
 
     displayUsers(users) {

@@ -28,7 +28,7 @@ class MediaForm extends React.Component {
     render() {
 
         return (
-            <form className="add-media" onSubmit={ this.onSaveMedia }>
+            <form className="add-media" onSubmit={ (e) => this.onSaveMedia(e) }>
                 <div className="row">
                     <div className="col">
                         <DatePicker selected={ this.state.date }
@@ -47,7 +47,7 @@ class MediaForm extends React.Component {
                             <option value="BluRay">BluRay</option>
                         </select>
                     </div>
-                    <button className="btn btn-sm btn-success" onClick={ (e) => this.onSaveMedia(e) } >
+                    <button className="btn btn-sm btn-success">
                         <i className="fa fa-check"></i>
                     </button>
                 </div>

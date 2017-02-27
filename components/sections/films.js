@@ -150,20 +150,6 @@ class Films extends React.Component {
                 loaded_media: true
             });
         });
-
-        /*
-        fireMedia.on('child_added', snapshot => {
-            const medium = snapshot.val();
-            const media = this.state.media;
-            media[snapshot.key] = medium[snapshot.key];
-            console.log(snapshot.key);
-
-            this.setState({
-                media: media,
-                loaded_media: true
-            });
-        });
-*/
     }
 }
 

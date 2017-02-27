@@ -10,10 +10,12 @@ import Rating from './film/rating';
 import ReleasedYear from './film/released_year';
 import ScreenedYear from './film/screened_year';
 
+import Screenings from './film/screenings';
+import ScreeningForm from './film/screening-form';
+
 import AvailableMedia from './film/available_media';
 import AddMediaButton from './film/add-media-button';
 import MediaForm from './film/media-form';
-import Screenings from './film/screenings';
 
 class Film extends React.Component {
 
@@ -61,7 +63,8 @@ class Film extends React.Component {
                         </div>
 
                         <div className="film-screenings">
-                             <Screenings screeningsInfo={ this.props.screeningsInfo } />
+                            <ScreeningForm filmId={ this.props.film.id } />
+                            <Screenings screeningsInfo={ this.props.screeningsInfo } />
                         </div>
 
                     </div>
