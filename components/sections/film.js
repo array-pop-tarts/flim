@@ -31,7 +31,7 @@ class Film extends React.Component {
             }
         };
 
-        this.ratings = this.ratings.bind(this);
+        this.renderRating = this.renderRating.bind(this);
         this.renderScreenings = this.renderScreenings.bind(this);
         this.renderMedia = this.renderMedia.bind(this);
 
@@ -62,28 +62,27 @@ class Film extends React.Component {
                             </div>
                         </div>
                         <div className={ "rating h6 " + ratedClass }>
-                            { this.ratings(film.rating) }
+                            { this.renderRating(film.rating) }
                         </div>
                     </div>
 
                     <div className="card-block">
-
                         <div className="film-media mb-2">
                             { this.state.showForms.Media ? <MediaForm filmId={this.props.film.id} /> : null }
                             { this.renderMedia() }
                         </div>
-
                         <div className="film-screenings">
                             { this.state.showForms.Screening ? <ScreeningForm filmId={this.props.film.id} /> : null }
                             { this.renderScreenings() }
                         </div>
                     </div>
+
                 </div>
             </div>
         );
     }
 
-    ratings(rating) {
+    renderRating(rating) {
 
         if (rating === undefined)
             rating = 0;

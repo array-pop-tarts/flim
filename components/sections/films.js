@@ -119,11 +119,12 @@ class Films extends React.Component {
         });
 
         let fireScreenings = firebase.database().ref('screenings');
-        fireScreenings.on('value', snapshot => {
+        fireScreenings.orderByChild("date").on('value', snapshot => {
             this.setState({
                 screenings: snapshot.val(),
                 loaded_screenings: true
-            })
+            });
+            console.log(snapshot.val());
         });
 
         let fireVenues = firebase.database().ref('venues');
