@@ -130,7 +130,7 @@ class Film extends React.Component {
         if (this.props.mediaInfo.length) {
             return (
                 <div className="available-media">
-                    <AvailableMedia mediaInfo={ this.props.mediaInfo }/>
+                    <AvailableMedia mediaInfo={ this.props.mediaInfo } />
                     <AddMediaButton
                         expanded={false}
                         onToggleForm={ (e) => this.displayMediaForm }
@@ -151,7 +151,7 @@ class Film extends React.Component {
 
     highlightRating(rating) {
         this.setState({rating: rating});
-        this.ratings(rating);
+        this.renderRating(rating);
     }
 
     changeRating(rating) {

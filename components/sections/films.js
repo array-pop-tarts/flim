@@ -124,7 +124,6 @@ class Films extends React.Component {
                 screenings: snapshot.val(),
                 loaded_screenings: true
             });
-            console.log(snapshot.val());
         });
 
         let fireVenues = firebase.database().ref('venues');
