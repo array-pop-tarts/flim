@@ -14,31 +14,29 @@ class Screening extends React.Component {
     constructor() {
         super();
 
-        this.displayDate = this.displayDate.bind(this);
+        this.renderDate = this.renderDate.bind(this);
+        this.renderUsers = this.renderUsers.bind(this);
     }
 
     render() {
-        this.displayDate();
+        this.renderDate();
         return (
             <li className="list-group-item  justify-content-between">
                 <div>
-                    { this.displayDate() } @ <Venue venue={this.props.screening.venueInfo } />
+                    { this.renderDate() } @ <Venue venue={this.props.screening.venueInfo } />
                 </div>
-                <button className="btn btn-sm btn-outline-secondary">
-                    <i className="fa fa-cog"></i>
-                </button>
                 <div className="screening-friends">
-                    { this.displayUsers(this.props.screening.usersInfo)}
+                    { this.renderUsers(this.props.screening.usersInfo)}
                 </div>
             </li>
         );
     }
 
-    displayDate() {
+    renderDate() {
         return moment(this.props.screening.date).format('YYYY-MM-DD');
     }
 
-    displayUsers(users) {
+    renderUsers(users) {
         let names = users.map(user => {
             return user.name;
         });

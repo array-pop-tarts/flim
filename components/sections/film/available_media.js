@@ -14,14 +14,13 @@ class AvailableMedia extends React.Component
     render()
     {
         return (
-            <div className="available-media">
+            <div>
                 <h6>Media</h6>
                 {
                     this.props.mediaInfo.map((medium) => {
                         return <Medium medium={ medium } key={ medium.key } />
                     })
                 }
-                <AddMediaButton expanded={false} />
             </div>
         );
     }

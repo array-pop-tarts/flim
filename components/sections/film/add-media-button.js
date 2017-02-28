@@ -11,7 +11,7 @@ class AddMediaButton extends React.Component {
         return (
             <button className="btn btn-outline-warning btn-sm"
                     aria-label="Add More Media for this Film"
-
+                    onClick={ this.props.onToggleForm() }
             >
                 <i className="fa fa-plus"></i>
                 { (this.props.expanded) ? " Add Media" : "" }

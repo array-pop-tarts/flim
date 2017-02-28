@@ -5,8 +5,6 @@
  */
 import React from 'react';
 
-import AddScreeningButton from './add-screening-button';
-
 class ScreenedYear extends React.Component {
     render() {
         return (
@@ -15,7 +13,6 @@ class ScreenedYear extends React.Component {
                 <a className="btn btn-sm btn-secondary">
                     { this.props.year }
                 </a>
-                <AddScreeningButton expanded={ false } />
             </div>
         );
     }

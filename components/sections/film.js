@@ -11,6 +11,7 @@ import ReleasedYear from './film/released_year';
 import ScreenedYear from './film/screened_year';
 
 import Screenings from './film/screenings';
+import AddScreeningButton from './film/add-screening-button';
 import ScreeningForm from './film/screening-form';
 
 import AvailableMedia from './film/available_media';
@@ -23,14 +24,22 @@ class Film extends React.Component {
         super();
 
         this.state = {
-            rating: null
+            rating: null,
+            showForms: {
+                Screening: false,
+                Media: false
+            }
         };
 
         this.ratings = this.ratings.bind(this);
-        this.media = this.media.bind(this);
+        this.renderScreenings = this.renderScreenings.bind(this);
+        this.renderMedia = this.renderMedia.bind(this);
 
         this.highlightRating = this.highlightRating.bind(this);
         this.changeRating = this.changeRating.bind(this);
+
+        this.displayScreeningForm = this.displayScreeningForm.bind(this);
+        this.displayMediaForm = this.displayMediaForm.bind(this);
     }
 
     render() {
@@ -43,8 +52,15 @@ class Film extends React.Component {
                 <div className="card film-card">
 
                     <div className="card-header">
-                        <h3>{ film.title }</h3>
-                        <h4>{ film.translation }</h4>
+                        <div className="d-flex justify-content-start">
+                            <div>
+                                <h3>{ film.title }</h3>
+                                <h4>{ film.translation }</h4>
+                            </div>
+                            <div className="ml-auto">
+                                <ReleasedYear year={ film.released } />
+                            </div>
+                        </div>
                         <div className={ "rating h6 " + ratedClass }>
                             { this.ratings(film.rating) }
                         </div>
@@ -52,21 +68,15 @@ class Film extends React.Component {
 
                     <div className="card-block">
 
-                        <div className="row text-center film-years">
-                            <ReleasedYear year={ film.released } />
-                            <ScreenedYear year={ film.screened } />
-                        </div>
-
-                        <div className="film-media">
-                            { this.media() }
-                            <MediaForm filmId={ this.props.film.id } />
+                        <div className="film-media mb-2">
+                            { this.state.showForms.Media ? <MediaForm filmId={this.props.film.id} /> : null }
+                            { this.renderMedia() }
                         </div>
 
                         <div className="film-screenings">
-                            <ScreeningForm filmId={ this.props.film.id } />
-                            <Screenings screeningsInfo={ this.props.screeningsInfo } />
+                            { this.state.showForms.Screening ? <ScreeningForm filmId={this.props.film.id} /> : null }
+                            { this.renderScreenings() }
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -95,14 +105,47 @@ class Film extends React.Component {
         return ratingLinks;
     }
 
-    media() {
+    renderScreenings() {
+        if (this.props.screeningsInfo.length) {
+            return (
+                <div className="screenings">
+                    <ul className="list-group">
+                        <Screenings screeningsInfo={ this.props.screeningsInfo } />
+                    </ul>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div className="text-center">
+                    <AddScreeningButton
+                        expanded={true}
+                        onToggleForm={ (e) => this.displayScreeningForm }
+                    />
+                </div>
+            );
+        }
+    }
+
+    renderMedia() {
         if (this.props.mediaInfo.length) {
-            return <AvailableMedia mediaInfo={ this.props.mediaInfo }/>;
+            return (
+                <div className="available-media">
+                    <AvailableMedia mediaInfo={ this.props.mediaInfo }/>
+                    <AddMediaButton
+                        expanded={false}
+                        onToggleForm={ (e) => this.displayMediaForm }
+                    />
+                </div>
+            )
         }
         else
             return (
                 <div className="text-center">
-                    <AddMediaButton expanded={true} />
+                    <AddMediaButton
+                        expanded={true}
+                        onToggleForm={ (e) => this.displayMediaForm }
+                    />
                 </div>
             );
     }
@@ -115,6 +158,17 @@ class Film extends React.Component {
     changeRating(rating) {
         const fireFilmRating = firebase.database().ref('films/' + this.props.film.id + '/rating');
         fireFilmRating.set(rating);
+    }
+
+    displayScreeningForm() {
+        let showForms = this.state.showForms;
+        showForms.Screening = (!this.state.showForms.Screening);
+        this.setState({showForms: showForms});
+    }
+    displayMediaForm() {
+        let showForms = this.state.showForms;
+        showForms.Media = (!this.state.showForms.Media);
+        this.setState({showForms: showForms});
     }
 }
 
