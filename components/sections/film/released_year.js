@@ -8,7 +8,7 @@ import React from 'react';
 class ReleasedYear extends React.Component {
     render() {
         return (
-            <a className="btn btn-sm btn-secondary">
+            <a className="btn btn-sm btn-success">
                 { this.props.year }
             </a>
         );

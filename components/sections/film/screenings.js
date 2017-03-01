@@ -10,13 +10,13 @@ import Screening from './screening';
 class Screenings extends React.Component {
     render() {
         return (
-            <div>
+            <ul className="list-group list-group-flush">
                 {
                    this.props.screeningsInfo.map((screening) => {
                         return <Screening screening={ screening } key={ screening.key }/>
                     })
                 }
-            </div>
+            </ul>
         );
     }
 }

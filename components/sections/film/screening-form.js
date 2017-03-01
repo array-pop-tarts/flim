@@ -8,15 +8,30 @@ import firebase from 'firebase';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
+import VenuesHelperList from './venues-helper-list';
+
 class ScreeningForm extends React.Component {
 
     constructor() {
         super();
         this.state = {
             date: moment(),
-            venue: "",
-            users: []
+            selectedVenue: {
+                id: null,
+                name: ""
+            },
+            users: [],
+
+            showHelpers: {
+                Venues: false,
+                Users: false
+            },
+
+            venuesList: []
         };
+
+        this.toggleVenuesHelper = this.toggleVenuesHelper.bind(this);
+        this.renderVenuesHelper = this.renderVenuesHelper.bind(this);
 
         this.onDateChange = this.onDateChange.bind(this);
         this.onVenueChange = this.onVenueChange.bind(this);
@@ -25,7 +40,7 @@ class ScreeningForm extends React.Component {
 
     render() {
         return (
-            <form className="add-screening" onSubmit={ (e) => this.onSaveScreening(e)}>
+            <form className="add-screening m-2" onSubmit={ (e) => this.onSaveScreening(e)}>
                 <div className="row">
                     <div className="col">
                         <DatePicker selected={ this.state.date }
@@ -35,14 +50,31 @@ class ScreeningForm extends React.Component {
                         />
                     </div>
                     <div className="col">
+                        <input type="text"
+                               className="form-control form-control-sm"
+                               placeholder="Venue"
+                               value={ this.state.selectedVenue.name }
+                               onFocus={ this.toggleVenuesHelper }
+                               onChange={ this.onVenueChange }
+                        />
+                        { this.state.showHelpers.Venues ? this.renderVenuesHelper() : null}
+{/*
                         <select className="form-control form-control-sm"
                                 value={this.state.venue}
                                 onChange={ this.onVenueChange }
                         >
                             <option value="">--</option>
-                            <option value="-567asd">Hogarth</option>
-                            <option value="-678qwe">Royal Cinema</option>
+                            {
+                                Object.keys(this.props.venuesList).map((key, i) => {
+                                    return (
+                                        <option value={key} key={i}>
+                                            { this.props.venuesList[key].name }
+                                        </option>
+                                    )
+                                })
+                            }
                         </select>
+*/}
                     </div>
                 </div>
                 <div className="form-check">
@@ -70,6 +102,48 @@ class ScreeningForm extends React.Component {
                 </button>
             </form>
         );
+    }
+
+    toggleVenuesHelper() {
+        let showHelpers = this.state.showHelpers;
+        showHelpers.Venues = (! this.state.showHelpers.Venues);
+        this.setState({showHelpers: showHelpers});
+    }
+
+    renderVenuesHelper() {
+        return (
+            <div className="list-group">
+                {
+                    this.state.venuesList.map((venue, i) => {
+                        return (
+                            <button
+                               className="list-group-item list-group-item-action"
+                               key={i}
+                               onClick={ (e) => this.selectVenue(venue, e) }
+                            >
+                                { venue.name }
+                            </button>
+                        )
+                    })
+                }
+                <button
+                   className="list-group-item list-group-item-action text-center"
+                   onClick={ this.toggleVenuesHelper }
+                ><small>close</small></button>
+            </div>
+        );
+    }
+
+    selectVenue(venue, e) {
+        e.preventDefault();
+        let selectedVenue = {
+            id: venue.id,
+            name: venue.name
+        };
+        this.setState({
+            selectedVenue: selectedVenue
+        });
+        this.toggleVenuesHelper();
     }
 
     onDateChange(date) {
@@ -105,7 +179,7 @@ class ScreeningForm extends React.Component {
 
         const screening = {
             date: screened,
-            venue: this.state.venue,
+            venue: this.state.selectedVenue.id,
             users: users
         };
 
@@ -128,6 +202,27 @@ class ScreeningForm extends React.Component {
         newScreening['/films/' + this.props.filmId + '/screenings/' + newFireScreening.key] = true;
 
         firebase.database().ref().update(newScreening);
+
+        this.setState({
+            selectedVenue: {
+                id: null,
+                name: ""
+            }
+        });
+    }
+
+    componentDidMount() {
+        let fireVenues = firebase.database().ref('venues');
+        fireVenues.orderByChild('name').on('child_added', snapshot => {
+            this.setState(currentState => {
+                const newState = Object.assign({}, currentState);
+                newState.venuesList = newState.venuesList.concat({
+                    id: snapshot.key,
+                    name: snapshot.val().name
+                });
+                return newState;
+            })
+        });
     }
 }
 

@@ -103,20 +103,28 @@ $orange: #f0ad4e !default;
 $yellow: #FFFF8F !default;
 $green:  #9DDA22 !default;
 $blue:   #0275d8 !default;
-$teal:   #5bc0de !default;
-$pink:   #CE3D8F !default;
-$purple: #70209C !default;
+$teal:   #16a79d !default;
+$pink:   #DD557B !default;
+$purple: #80628b !default;
+
+$primary:         #CF4857 !default;
+$success:         #16a79d !default;
+$info:            #80628b !default;
+$warning:         #F5AC43 !default;
+$danger:          #F7624A !default;
+$neutral:         #1C6A81 !default;
+
 
 // Create grayscale
-$gray-dark:                 #222222 !default;
+$gray-dark:                 #333333 !default;
 $gray:                      #55595c !default;
 $gray-light:                #818a91 !default;
 $gray-lighter:              #eceeef !default;
 $gray-lightest:             #f7f7f9 !default;
 
 // Reassign color vars to semantic color scheme
-$brand-primary:             $purple !default;
-$brand-success:             $green !default;
+$brand-primary:             $pink !default;
+$brand-success:             $teal !default;
 $brand-info:                #235285 !default;
 $brand-warning:             #ffa800 !default;
 $brand-danger:              $pink !default;

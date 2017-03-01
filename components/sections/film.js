@@ -8,7 +8,6 @@ import firebase from 'firebase';
 
 import Rating from './film/rating';
 import ReleasedYear from './film/released_year';
-import ScreenedYear from './film/screened_year';
 
 import Screenings from './film/screenings';
 import AddScreeningButton from './film/add-screening-button';
@@ -38,8 +37,8 @@ class Film extends React.Component {
         this.highlightRating = this.highlightRating.bind(this);
         this.changeRating = this.changeRating.bind(this);
 
-        this.displayScreeningForm = this.displayScreeningForm.bind(this);
-        this.displayMediaForm = this.displayMediaForm.bind(this);
+        this.toggleScreeningForm = this.toggleScreeningForm.bind(this);
+        this.toggleMediaForm = this.toggleMediaForm.bind(this);
     }
 
     render() {
@@ -66,17 +65,14 @@ class Film extends React.Component {
                         </div>
                     </div>
 
-                    <div className="card-block">
-                        <div className="film-media mb-2">
-                            { this.state.showForms.Media ? <MediaForm filmId={this.props.film.id} /> : null }
-                            { this.renderMedia() }
-                        </div>
-                        <div className="film-screenings">
-                            { this.state.showForms.Screening ? <ScreeningForm filmId={this.props.film.id} /> : null }
-                            { this.renderScreenings() }
-                        </div>
+                    <div className="card-block film-media">
+                        { this.renderMedia() }
+                        { this.state.showForms.Media ? <MediaForm filmId={this.props.film.id} /> : null }
                     </div>
-
+                    <div className="film-screenings">
+                        { this.renderScreenings() }
+                        { this.state.showForms.Screening ? <ScreeningForm filmId={this.props.film.id} venuesList={ this.props.venuesList } /> : null }
+                    </div>
                 </div>
             </div>
         );
@@ -107,21 +103,21 @@ class Film extends React.Component {
     renderScreenings() {
         if (this.props.screeningsInfo.length) {
             return (
-                <div className="screenings">
-                    <ul className="list-group">
-                        <Screenings screeningsInfo={ this.props.screeningsInfo } />
-                    </ul>
+                <div>
+                    <Screenings screeningsInfo={ this.props.screeningsInfo } />
+                    <AddScreeningButton
+                        expanded={true}
+                        onToggleForm={ (e) => this.toggleScreeningForm }
+                    />
                 </div>
             )
         }
         else {
             return (
-                <div className="text-center">
-                    <AddScreeningButton
-                        expanded={true}
-                        onToggleForm={ (e) => this.displayScreeningForm }
-                    />
-                </div>
+                <AddScreeningButton
+                    expanded={true}
+                    onToggleForm={ (e) => this.toggleScreeningForm }
+                />
             );
         }
     }
@@ -133,7 +129,7 @@ class Film extends React.Component {
                     <AvailableMedia mediaInfo={ this.props.mediaInfo } />
                     <AddMediaButton
                         expanded={false}
-                        onToggleForm={ (e) => this.displayMediaForm }
+                        onToggleForm={ (e) => this.toggleMediaForm }
                     />
                 </div>
             )
@@ -143,7 +139,7 @@ class Film extends React.Component {
                 <div className="text-center">
                     <AddMediaButton
                         expanded={true}
-                        onToggleForm={ (e) => this.displayMediaForm }
+                        onToggleForm={ (e) => this.toggleMediaForm }
                     />
                 </div>
             );
@@ -159,12 +155,12 @@ class Film extends React.Component {
         fireFilmRating.set(rating);
     }
 
-    displayScreeningForm() {
+    toggleScreeningForm() {
         let showForms = this.state.showForms;
         showForms.Screening = (!this.state.showForms.Screening);
         this.setState({showForms: showForms});
     }
-    displayMediaForm() {
+    toggleMediaForm() {
         let showForms = this.state.showForms;
         showForms.Media = (!this.state.showForms.Media);
         this.setState({showForms: showForms});

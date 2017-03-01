@@ -19,7 +19,6 @@ class Screening extends React.Component {
     }
 
     render() {
-        this.renderDate();
         return (
             <li className="list-group-item  justify-content-between">
                 <div>

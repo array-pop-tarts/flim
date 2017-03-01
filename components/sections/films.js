@@ -47,6 +47,7 @@ class Films extends React.Component {
                                   key={ i }
                                   screeningsInfo={ this.getScreenings(film) }
                                   mediaInfo={ this.getMedia(film) }
+                                  venuesList={ this.state.venues }
                             />
                         );
                     })}
@@ -59,13 +60,19 @@ class Films extends React.Component {
 
     getScreenings(film) {
         if (!film.screenings) { return []; }
-        return Object.keys(film.screenings).map(id => {
-            let screening = this.state.screenings[id];
-            screening.key = id;
-            screening.venueInfo = this.getVenueForScreening(screening);
-            screening.usersInfo = this.getUsersForScreening(screening);
-            return screening;
-        });
+        let filmScreenings = [];
+        Object.keys(this.state.screenings).forEach(function(id) {
+            if (film.screenings[id] !== undefined) {
+                let screening = this.state.screenings[id];
+                screening.key = id;
+                screening.venueInfo = this.getVenueForScreening(screening);
+                screening.usersInfo = this.getUsersForScreening(screening);
+                filmScreenings.push(screening);
+            }
+        }, this);
+
+        filmScreenings.reverse();
+        return filmScreenings;
     }
 
     getVenueForScreening(screening) {
@@ -120,14 +127,18 @@ class Films extends React.Component {
 
         let fireScreenings = firebase.database().ref('screenings');
         fireScreenings.orderByChild("date").on('value', snapshot => {
+            let screenings = {};
+            snapshot.forEach(function (screening) {
+                screenings[screening.key] = screening.val();
+            });
             this.setState({
-                screenings: snapshot.val(),
+                screenings: screenings,
                 loaded_screenings: true
             });
         });
 
         let fireVenues = firebase.database().ref('venues');
-        fireVenues.on('value', snapshot => {
+        fireVenues.orderByChild('name').on('value', snapshot => {
             this.setState({
                 venues: snapshot.val(),
                 loaded_venues: true

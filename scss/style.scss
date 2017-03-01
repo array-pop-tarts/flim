@@ -5,7 +5,7 @@ html {
 }
 
 body {
-    background: $gray-dark;
+    background: $neutral;
 }
 
 @include media-breakpoint-up(sm) {
@@ -209,6 +209,10 @@ ul {
 
 /* FILM CARDS */
 
+.card-header {
+  background-color: $gray-dark;
+  color: $gray-lighter;
+}
 
 .rating {
     .btn {
@@ -224,6 +228,18 @@ ul {
     .btn {
         color: $gray-light;
     }
+}
+
+.film-screenings {
+  background-color: $warning;
+
+  li {
+    background-color: transparent;
+  }
+}
+
+.film-media {
+  background-color: $purple;
 }
 
 .available-media {
