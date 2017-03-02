@@ -15,23 +15,26 @@ class ScreeningForm extends React.Component {
     constructor() {
         super();
         this.state = {
-            date: moment(),
-            selectedVenue: {
-                id: null,
-                name: ""
-            },
-            users: [],
+            selectedDate: moment(),
+            selectedVenue: {},
+            selectedUsers: {},
 
             showHelpers: {
                 Venues: false,
                 Users: false
             },
 
-            venuesList: []
+            venuesList: [],
+            usersList: []
         };
 
         this.toggleVenuesHelper = this.toggleVenuesHelper.bind(this);
         this.renderVenuesHelper = this.renderVenuesHelper.bind(this);
+        this.selectVenue = this.selectVenue.bind(this);
+
+        this.toggleUsersHelper = this.toggleUsersHelper.bind(this);
+        this.renderUsersHelper = this.renderUsersHelper.bind(this);
+        this.selectUser = this.selectUser.bind(this);
 
         this.onDateChange = this.onDateChange.bind(this);
         this.onVenueChange = this.onVenueChange.bind(this);
@@ -43,7 +46,7 @@ class ScreeningForm extends React.Component {
             <form className="add-screening m-2" onSubmit={ (e) => this.onSaveScreening(e)}>
                 <div className="row">
                     <div className="col">
-                        <DatePicker selected={ this.state.date }
+                        <DatePicker selected={ this.state.selectedDate }
                                     className="form-control form-control-sm"
                                     dateFormat="YYYY-MM-DD"
                                     onChange={ this.onDateChange }
@@ -52,56 +55,35 @@ class ScreeningForm extends React.Component {
                     <div className="col">
                         <input type="text"
                                className="form-control form-control-sm"
-                               placeholder="Venue"
-                               value={ this.state.selectedVenue.name }
-                               onFocus={ this.toggleVenuesHelper }
+                               placeholder="Where'd you see it?"
+                               value={ this.state.selectedVenue.name || "" }
+                               onMouseOver={ this.toggleVenuesHelper }
                                onChange={ this.onVenueChange }
                         />
                         { this.state.showHelpers.Venues ? this.renderVenuesHelper() : null}
-{/*
-                        <select className="form-control form-control-sm"
-                                value={this.state.venue}
-                                onChange={ this.onVenueChange }
-                        >
-                            <option value="">--</option>
-                            {
-                                Object.keys(this.props.venuesList).map((key, i) => {
-                                    return (
-                                        <option value={key} key={i}>
-                                            { this.props.venuesList[key].name }
-                                        </option>
-                                    )
-                                })
-                            }
-                        </select>
-*/}
                     </div>
                 </div>
-                <div className="form-check">
-                    <label className="form-check-label">
-                        <input className="form-check-input"
-                               type="checkbox"
-                               value="-345iop"
-                               onChange={ this.onUsersChange }
-                        />
-                        Evan
-                    </label>
-                </div>
-                <div className="form-check">
-                    <label className="form-check-label">
-                        <input className="form-check-input"
-                               type="checkbox"
-                               value="-456jkl"
-                               onChange={ this.onUsersChange }
-                        />
-                        Richard
-                    </label>
-                </div>
+                <input type="text"
+                       className="form-control form-control-sm"
+                       placeholder="Did you got to the movies by yourself again?"
+                       value={ this.state.selectedUsers.names || "" }
+                       onMouseOver={ this.toggleUsersHelper }
+                       onChange={ this.onUsersChange }
+                />
+                { this.state.showHelpers.Users ? this.renderUsersHelper() : null}
                 <button className="btn btn-sm btn-success">
                     <i className="fa fa-check"></i>
                 </button>
             </form>
         );
+    }
+
+    onDateChange(date) {
+        this.setState({ selectedDate: date });
+    }
+
+    onVenueChange(e) {
+        this.setState({ venue: e.target.value });
     }
 
     toggleVenuesHelper() {
@@ -146,47 +128,91 @@ class ScreeningForm extends React.Component {
         this.toggleVenuesHelper();
     }
 
-    onDateChange(date) {
-        this.setState({ date: date });
-    }
-
-    onVenueChange(e) {
-        this.setState({ venue: e.target.value });
-    }
-
     onUsersChange(e) {
-        let users = this.state.users;
-        if (users.includes(e.target.value)) {
-            let index = users.indexOf(e.target.value);
-            users.splice(index, 1);
-        }
-        else
-            users.push(e.target.value);
+/*
+        let selectedUsers = this.state.selectedUsers;
+        selectedUsers.push(e.target.value);
         this.setState({ users: users });
+*/
+    }
+
+    toggleUsersHelper() {
+        let showHelpers = this.state.showHelpers;
+        showHelpers.Users = (! this.state.showHelpers.Users);
+        this.setState({showHelpers: showHelpers});
+    }
+
+    renderUsersHelper() {
+        return (
+            <div className="list-group">
+                {
+                    this.state.usersList.map((user, i) => {
+                        return (
+                            <button
+                                className="list-group-item list-group-item-action"
+                                key={i}
+                                onClick={ (e) => this.selectUser(user, e) }
+                            >
+                                { user.name }
+                            </button>
+                        )
+                    })
+                }
+                <button
+                    className="list-group-item list-group-item-action text-center"
+                    onClick={ this.toggleUsersHelper }
+                ><small>close</small></button>
+            </div>
+        );
+    }
+
+    selectUser(user, e) {
+        e.preventDefault();
+
+        let selectedUsersNames = this.state.selectedUsers.names || "";
+        selectedUsersNames = (selectedUsersNames).length > 0 ? selectedUsersNames + ", " + user.name : user.name;
+
+        let selectedUsers = this.state.selectedUsers.users || [];
+        let selectedUser = {
+            id: user.id,
+            name: user.name
+        };
+        selectedUsers.push(selectedUser);
+
+        this.setState({
+            selectedUsers: {
+                names: selectedUsersNames,
+                users: selectedUsers
+            }
+        });
+
+        this.toggleUsersHelper();
     }
 
     onSaveScreening(e) {
         e.preventDefault();
-        const fireScreenings = firebase.database().ref('screenings');
 
-        let selectedDate = (this.state.date);
-        let screened = selectedDate._d.getTime();
+        const db = firebase.database();
+
+        let selectedDate = (this.state.selectedDate);
+        let dateTimestamp = selectedDate._d.getTime();
 
         let users = {};
-        this.state.users.map(user => {
-            users[user] = true;
+        console.log(this.state.selectedUsers);
+        this.state.selectedUsers.users.map(user => {
+            users[user.id] = true;
         });
 
         const screening = {
-            date: screened,
+            date: dateTimestamp,
             venue: this.state.selectedVenue.id,
             users: users
         };
 
-        let timestamp = new Date(screening.date);
-        let newScreenedYear = timestamp.getFullYear();
+        let fullDate = new Date(dateTimestamp);
+        let newScreenedYear = fullDate.getFullYear();
 
-        let savedScreenedYearRef = firebase.database().ref('/films/' + this.props.filmId + '/screened');
+        let savedScreenedYearRef = db.ref('/films/' + this.props.filmId + '/screened');
         let savedScreenedYear = null;
         savedScreenedYearRef.on('value', snapshot => {
             savedScreenedYear = snapshot.val();
@@ -197,22 +223,23 @@ class ScreeningForm extends React.Component {
             newScreening['/films/' + this.props.filmId + '/screened'] = newScreenedYear;
         }
 
+        const fireScreenings = db.ref('screenings');
         let newFireScreening = fireScreenings.push(screening);
 
         newScreening['/films/' + this.props.filmId + '/screenings/' + newFireScreening.key] = true;
 
-        firebase.database().ref().update(newScreening);
+        db.ref().update(newScreening);
 
         this.setState({
-            selectedVenue: {
-                id: null,
-                name: ""
-            }
+            selectedVenue: {},
+            selectedUsers: {}
         });
     }
 
     componentDidMount() {
-        let fireVenues = firebase.database().ref('venues');
+        let db = firebase.database();
+
+        let fireVenues = db.ref('venues');
         fireVenues.orderByChild('name').on('child_added', snapshot => {
             this.setState(currentState => {
                 const newState = Object.assign({}, currentState);
@@ -221,7 +248,19 @@ class ScreeningForm extends React.Component {
                     name: snapshot.val().name
                 });
                 return newState;
-            })
+            });
+        });
+
+        let fireUsers = db.ref('users');
+        fireUsers.orderByChild('name').on('child_added', snapshot => {
+            this.setState(currentState => {
+                const newState = Object.assign({}, currentState);
+                newState.usersList = newState.usersList.concat({
+                    id: snapshot.key,
+                    name: snapshot.val().name
+                });
+                return newState;
+            });
         });
     }
 }
