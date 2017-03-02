@@ -24,6 +24,12 @@ class ScreeningForm extends React.Component {
                 Users: false
             },
 
+            errors: {
+                date: false,
+                venue: false,
+                users: false
+            },
+
             venuesList: [],
             usersList: []
         };
@@ -83,7 +89,12 @@ class ScreeningForm extends React.Component {
     }
 
     onVenueChange(e) {
-        this.setState({ venue: e.target.value });
+        let selectedVenue = {
+            name: e.target.value
+        };
+        this.setState({
+            selectedVenue: selectedVenue
+        });
     }
 
     toggleVenuesHelper() {
@@ -129,11 +140,10 @@ class ScreeningForm extends React.Component {
     }
 
     onUsersChange(e) {
-/*
         let selectedUsers = this.state.selectedUsers;
-        selectedUsers.push(e.target.value);
-        this.setState({ users: users });
-*/
+        let selectedUsersNames = e.target.value;
+        selectedUsers.names = selectedUsersNames;
+        this.setState({ selectedUsers: selectedUsers });
     }
 
     toggleUsersHelper() {
@@ -198,7 +208,6 @@ class ScreeningForm extends React.Component {
         let dateTimestamp = selectedDate._d.getTime();
 
         let users = {};
-        console.log(this.state.selectedUsers);
         this.state.selectedUsers.users.map(user => {
             users[user.id] = true;
         });
