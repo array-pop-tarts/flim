@@ -14,16 +14,13 @@ class Films extends React.Component {
         super();
 
         this.state = {
-            films: [{
-                title: "",
-                translation: "",
-                released: "",
-                rating: null
-            }],
+            films: [{}],
             screenings: {},
             venues: {},
             users: {},
             media: {},
+
+            showFilmForm: false,
 
             loaded_screenings: false,
             loaded_films: false,
@@ -31,6 +28,8 @@ class Films extends React.Component {
             loaded_users: false,
             loaded_media: false
         };
+
+        this.toggleFilmForm = this.toggleFilmForm.bind(this);
 
         this.getScreenings = this.getScreenings.bind(this);
         this.getVenueForScreening = this.getVenueForScreening.bind(this);
@@ -46,6 +45,13 @@ class Films extends React.Component {
         ) {
             return (
                 <div className="masonry">
+                    <div className="brick">
+                        <div className="card film-card film-form-placeholder" onClick={ this.toggleFilmForm } >
+                            <div className="card-block">
+                                <i className="fa fa-plus fa-3x fa-inverse"></i>
+                            </div>
+                        </div>
+                    </div>
                     {this.state.films.map((film, i) => {
                         return (
                             <Film film={ film }
@@ -62,6 +68,11 @@ class Films extends React.Component {
         } else {
             return <div>Loading...</div>;
         }
+    }
+
+    toggleFilmForm() {
+        let showFilmForm = ! this.state.showFilmForm;
+        this.setState({showFilmForm: showFilmForm});
     }
 
     getScreenings(film) {

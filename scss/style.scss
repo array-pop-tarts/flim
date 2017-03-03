@@ -221,6 +221,13 @@ ul {
 
 /* FILM CARDS */
 
+.film-form-placeholder {
+    height: 200px;
+    background: $teal;
+    cursor: pointer;
+    text-align: center;
+}
+
 .card-header {
   background-color: $gray-dark;
   color: $gray-lighter;

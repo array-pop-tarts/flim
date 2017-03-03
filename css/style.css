@@ -10086,6 +10086,13 @@ ul {
 }
 
 /* FILM CARDS */
+.film-form-placeholder {
+  height: 200px;
+  background: #16a79d;
+  cursor: pointer;
+  text-align: center;
+}
+
 .card-header {
   background-color: #333333;
   color: #eceeef;
