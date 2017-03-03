@@ -14,7 +14,12 @@ class Films extends React.Component {
         super();
 
         this.state = {
-            films: [],
+            films: [{
+                title: "",
+                translation: "",
+                released: "",
+                rating: null
+            }],
             screenings: {},
             venues: {},
             users: {},
@@ -45,6 +50,7 @@ class Films extends React.Component {
                         return (
                             <Film film={ film }
                                   key={ i }
+                                  i={ i }
                                   screeningsInfo={ this.getScreenings(film) }
                                   mediaInfo={ this.getMedia(film) }
                                   venuesList={ this.state.venues }

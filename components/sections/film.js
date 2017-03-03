@@ -6,9 +6,10 @@
 import React from 'react';
 import firebase from 'firebase';
 
-import Rating from './film/rating';
-import ReleasedYear from './film/released_year';
+import FilmInfo from './film/film-info';
+import FilmForm from './film/film-form';
 
+import Rating from './film/rating';
 import Screenings from './film/screenings';
 import AddScreeningButton from './film/add-screening-button';
 import ScreeningForm from './film/screening-form';
@@ -23,13 +24,14 @@ class Film extends React.Component {
         super();
 
         this.state = {
-            rating: null,
             showForms: {
                 Screening: false,
                 Media: false
-            }
+            },
+            rating: null
         };
 
+        this.renderFilm = this.renderFilm.bind(this);
         this.renderRating = this.renderRating.bind(this);
         this.renderScreenings = this.renderScreenings.bind(this);
         this.renderMedia = this.renderMedia.bind(this);
@@ -46,20 +48,12 @@ class Film extends React.Component {
         let film = this.props.film;
         let ratedClass = (film.rating) ? "" : "unrated";
 
-        return (
-            <div className="col-24 col-sm-12 col-xl-6">
-                <div className="card film-card">
 
+        return (
+            <div className="col-24 col-sm-12 col-xl-6" style={ {opacity: (this.props.i == 0) ? 0.1 : 1}}>
+                <div className="card film-card">
                     <div className="card-header">
-                        <div className="d-flex justify-content-start">
-                            <div>
-                                <h3>{ film.title }</h3>
-                                <h4>{ film.translation }</h4>
-                            </div>
-                            <div className="ml-auto">
-                                <ReleasedYear year={ film.released } />
-                            </div>
-                        </div>
+                        { this.renderFilm() }
                         <div className={ "rating h6 " + ratedClass }>
                             { this.renderRating(film.rating) }
                         </div>
@@ -76,6 +70,20 @@ class Film extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    renderFilm() {
+        if (this.props.i == 0) {
+            return <FilmForm />
+        }
+        else if (this.props.i >= 1) {
+            return (
+                <FilmInfo title={this.props.film.title}
+                          translation={this.props.film.translation}
+                          released={this.props.film.released}
+                />
+            );
+        }
     }
 
     renderRating(rating) {
@@ -165,6 +173,8 @@ class Film extends React.Component {
         showForms.Media = (!this.state.showForms.Media);
         this.setState({showForms: showForms});
     }
+
+
 }
 
 export default Film;

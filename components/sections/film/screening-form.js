@@ -51,7 +51,7 @@ class ScreeningForm extends React.Component {
         return (
             <form className="add-screening m-2" onSubmit={ (e) => this.onSaveScreening(e)}>
                 <div className="row">
-                    <div className="col">
+                    <div className="col has-danger">
                         <DatePicker selected={ this.state.selectedDate }
                                     className="form-control form-control-sm"
                                     dateFormat="YYYY-MM-DD"
