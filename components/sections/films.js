@@ -45,7 +45,7 @@ class Films extends React.Component {
             && this.state.loaded_media
         ) {
             return (
-                <div className="row">
+                <div className="masonry">
                     {this.state.films.map((film, i) => {
                         return (
                             <Film film={ film }

@@ -50,7 +50,7 @@ class Film extends React.Component {
 
 
         return (
-            <div className="col-24 col-sm-12 col-xl-6" style={ {opacity: (this.props.i == 0) ? 0.1 : 1}}>
+            <div className="brick" style={ {opacity: (this.props.i == 0) ? 0.1 : 1}}>
                 <div className="card film-card">
                     <div className="card-header">
                         { this.renderFilm() }

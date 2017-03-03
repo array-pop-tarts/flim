@@ -203,8 +203,20 @@ ul {
 
 /* CARDS */
 
+.masonry {
+    column-count: 1;
+    column-gap: 0.5em;
+
+    .brick {
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
 .card.film-card {
     margin-bottom: 1rem;
+    display: block;
 }
 
 /* FILM CARDS */
@@ -252,4 +264,24 @@ ul {
 .screening-friends {
   font-size: smaller;
   padding-left: 1rem;
+}
+
+/* RESPONSIVE MASONRY */
+
+@media only screen and (min-width: 576px)  {
+    .masonry {
+        column-count: 2;
+        column-gap: 1em;
+    }
+}
+@media only screen and (min-width: 768px)  {
+    .masonry {
+        column-count: 3;
+    }
+}
+@media only screen and (min-width: 992px)  {
+    .masonry {
+        column-count: 4;
+        column-gap: 1.5em;
+    }
 }
